@@ -25,6 +25,27 @@ const generatePrompts = () => {
 }
 
 
+// create a switch statement that takes in the user input on what choice they pick
+// returns the user choice(function) based on the one they picked
+
+
+
+
+// create a function using the db, for every choice options
+
+
+
+
+
+
+// seperate the different choice options into a new js file to keep it more organized
+
+
+
+
+
+
+
 // a function that Inits the app
 function inits() {
     console.log("┌──────────────────┐");
