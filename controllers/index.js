@@ -10,15 +10,15 @@ const generatePrompts = () => {
             name: "choices",
             message: "What would you like to do?",
             choices: [
-            "View All Employees", 
-            "Add Employee", 
-            "Update Employee Role", 
-            "View All Roles", 
-            "Add Role",  
-            "View All Department",
-            "Add Department",
-            "Quit"
-        ]
+                "View All Employees",
+                "Add Employee",
+                "Update Employee Role",
+                "View All Roles",
+                "Add Role",
+                "View All Department",
+                "Add Department",
+                "Quit"
+            ]
         },
     ]
     return inquirer.prompt(questions);
@@ -27,7 +27,34 @@ const generatePrompts = () => {
 
 // create a switch statement that takes in the user input on what choice they pick
 // returns the user choice(function) based on the one they picked
+const userChoice = (choice) => {
+    if (choice !== "Quit")
+        switch (choice) {
+            case "View All Employees":
+                return
 
+            case "Add Employee":
+                return
+
+            case "Update Employee Role":
+                return
+
+            case "View All Roles":
+                return
+
+            case "Add Role":
+                return
+
+            case "View All Department":
+                return
+
+            case "Add Department":
+                return
+
+            default:
+                return "";
+        }
+};
 
 
 
@@ -39,7 +66,6 @@ const generatePrompts = () => {
 
 
 // seperate the different choice options into a new js file to keep it more organized
-
 
 
 
