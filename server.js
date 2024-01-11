@@ -111,9 +111,13 @@ const viewAllEmployees = () => {
 
 
 // a function that views all roles
-// const viewAllRoles = () => {
+const viewAllRoles = () => {
+    db.query('SELECT * FROM roles', (err, results) => {
+        console.table(results);
+        handleUserChoice();
+    });
+};
 
-// };
 
 
 // a function that adds a role
@@ -123,8 +127,12 @@ const viewAllEmployees = () => {
 
 
 // a function that views all departments
-// const viewAllDepartment = () => {
-// });
+const viewAllDepartment = () => {
+    db.query('SELECT * FROM departments', (err, results) => {
+        console.table(results);
+        handleUserChoice();
+    });
+};
 
 
 // a function that adds a department
