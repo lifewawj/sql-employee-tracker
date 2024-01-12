@@ -107,11 +107,9 @@ const viewAllRoles = () => {
     });
 };
 
-// create a function using the db, for every choice options
 // a function that views all employees
 const viewAllEmployees = () => {
     const query = 'SELECT * FROM departments INNER JOIN roles ON departments.id = roles.department_id INNER JOIN employees ON roles.id = employees.id;'
-
     db.query(query, (err, results) => {
         if (err) {
             console.log(err)
@@ -125,28 +123,28 @@ const viewAllEmployees = () => {
 
 
 
-const promptDeparment = () => {
-    const department = [
-        {
-            type: "input",
-            name: "newDepartment",
-            message: "What is the name of your Department?"
-        },
-    ];
-    return inquirer.prompt(department);
-}
 
 // a function that adds a department
 const addDepartment = () => {
+    const promptDepartment = () => {
+        const department = [
+            {
+                type: "input",
+                name: "newDepartment",
+                message: "What is the name of your Department?"
+            },
+        ];
+        return inquirer.prompt(department);
+    }
     // prompts the user with the Department question
-    promptDeparment().then((answers) => {
+    promptDepartment().then((answers) => {
 
         db.query("INSERT INTO departments (name) VALUES (?)", [answers.newDepartment], (err, results) => {
             if (err) {
                 console.log(err);
             };
 
-            console.log(`Added "${answers.newDepartment}" "to the database`);
+            console.log(`Added "${answers.newDepartment}" to the database`);
             handleUserChoice();
         });
     });
@@ -154,16 +152,110 @@ const addDepartment = () => {
 
 
 
-// a function that adds a role
-// const addRole = () => {
 
-// };
+
+
+
+// a function that adds a role
+const addRole = () => {
+    // Making a query to fetch the id and name from departments table in the database
+    db.query("SELECT id, name FROM departments", (err, departmentResults) => {
+        // If there is an error retrieving the data return an error
+        if (err) {
+            console.log(err);
+            return;
+        }
+
+        const departmentIdList = {};
+        departmentResults.forEach((department) => {
+            departmentIdList[department.name] = department.id;
+        });
+
+        const promptRole = () => {
+            const role = [
+                {
+                    type: "input",
+                    name: "newRole",
+                    message: "What is the name of the role?"
+                },
+                {
+                    type: "input",
+                    name: "newSalary",
+                    message: "What is the salary of the role?"
+                },
+                {
+                    type: "list",
+                    name: "department",
+                    message: "Which department does the role belong to?",
+                    choices: Object.keys(departmentIdList)
+                },
+            ];
+            return inquirer.prompt(role);
+        }
+
+        promptRole().then((answers) => {
+            const departmentId = departmentIdList[answers.department];
+
+            db.query("INSERT INTO roles (title, department_id, salary) VALUES (?, ?, ?)", [answers.newRole, departmentId, answers.newSalary], (err, results) => {
+                if (err) {
+                    console.log(err);
+                }
+
+                console.log(`Added "${answers.newRole}" to the database`);
+                handleUserChoice();
+            });
+        });
+    });
+};
 
 
 // a function that adds an employee
-// const addEmployee = () => {
+const addEmployee = () => {
+    db.query("SELECT id, title FROM roles", (err, rolesResults) => {
+        if (err) {
+            console.log(err);
+            return;
+        };
+        const roleIdList = {}
+        rolesResults.forEach((role) => {
+            roleIdList[role.title] = role.id;
+        });
 
-// };
+        const promptEmployee = () => {
+            const newEmployee = [
+                {
+                    type: "input",
+                    name: "firstName",
+                    message: "What is the employee's first name?"
+                },
+                {
+                    type: "input",
+                    name: "lastName",
+                    message: "What is the employee's last name?"
+                },
+                {
+                    type: "list",
+                    name: "role",
+                    message: "What is the employee's role?",
+                    choices: Object.keys(roleIdList)
+                },
+            ];
+            return inquirer.prompt(newEmployee);
+        }
+        promptEmployee().then((answers) => {
+            const roleId = roleIdList[answers.role];
+
+            db.query("INSERT INTO employees (first_name, last_name, role_id) VALUES (?, ?, ?)", [answers.firstName, answers.lastName, roleId], (err, results) => {
+                if (err) {
+                    console.log(err);
+                }
+
+                console.log(`Added "${answers.firstName} ${answers.lastName}" to the database`);
+                handleUserChoice();
+            });
+        });
+    });
+};
 
 
 // a function that updates employee role
@@ -171,8 +263,6 @@ const addDepartment = () => {
 
 // };
 
-
-// seperate the different choice options into a new js file to keep it more organized
 
 // a function that Inits the app
 function inits() {
