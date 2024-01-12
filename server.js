@@ -98,6 +98,10 @@ const viewAllDepartment = () => {
 // a function that views all roles
 const viewAllRoles = () => {
     db.query('SELECT * FROM roles', (err, results) => {
+        if (err) {
+            console.log(err)
+        };
+
         console.table(results);
         handleUserChoice();
     });
@@ -105,21 +109,49 @@ const viewAllRoles = () => {
 
 // create a function using the db, for every choice options
 // a function that views all employees
-// INCLUDES: 'employee id', 'first name', 'last name', 'job title', 'department', 'salaries', 'manager'
 const viewAllEmployees = () => {
     const query = 'SELECT * FROM departments INNER JOIN roles ON departments.id = roles.department_id INNER JOIN employees ON roles.id = employees.id;'
 
     db.query(query, (err, results) => {
+        if (err) {
+            console.log(err)
+        };
 
         console.table(results);
         handleUserChoice();
     });
 };
 
-// a function that adds a department
-// const addDepartment = () => {
 
-// };
+
+
+const promptDeparment = () => {
+    const department = [
+        {
+            type: "input",
+            name: "newDepartment",
+            message: "What is the name of your Department?"
+        },
+    ];
+    return inquirer.prompt(department);
+}
+
+// a function that adds a department
+const addDepartment = () => {
+    // prompts the user with the Department question
+    promptDeparment().then((answers) => {
+
+        db.query("INSERT INTO departments (name) VALUES (?)", [answers.newDepartment], (err, results) => {
+            if (err) {
+                console.log(err);
+            };
+
+            console.log(`Added "${answers.newDepartment}" "to the database`);
+            handleUserChoice();
+        });
+    });
+};
+
 
 
 // a function that adds a role
