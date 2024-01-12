@@ -87,28 +87,13 @@ const handleUserChoice = async () => {
 }
 
 
-
-
-// create a function using the db, for every choice options
-// a function that views all employees
-const viewAllEmployees = () => {
-    db.query('SELECT * FROM employees', (err, results) => {
+// a function that views all departments
+const viewAllDepartment = () => {
+    db.query('SELECT * FROM departments', (err, results) => {
         console.table(results);
         handleUserChoice();
     });
 };
-
-
-// a function that adds an employee
-// const addEmployee = () => {
-// };
-
-
-// a function that updates employee role
-// const updateEmployeeRole = () => {
-
-// };
-
 
 // a function that views all roles
 const viewAllRoles = () => {
@@ -118,6 +103,23 @@ const viewAllRoles = () => {
     });
 };
 
+// create a function using the db, for every choice options
+// a function that views all employees
+// INCLUDES: 'employee id', 'first name', 'last name', 'job title', 'department', 'salaries', 'manager'
+const viewAllEmployees = () => {
+    const query = 'SELECT * FROM departments INNER JOIN roles ON departments.id = roles.department_id INNER JOIN employees ON roles.id = employees.id;'
+
+    db.query(query, (err, results) => {
+
+        console.table(results);
+        handleUserChoice();
+    });
+};
+
+// a function that adds a department
+// const addDepartment = () => {
+
+// };
 
 
 // a function that adds a role
@@ -126,17 +128,14 @@ const viewAllRoles = () => {
 // };
 
 
-// a function that views all departments
-const viewAllDepartment = () => {
-    db.query('SELECT * FROM departments', (err, results) => {
-        console.table(results);
-        handleUserChoice();
-    });
-};
+// a function that adds an employee
+// const addEmployee = () => {
+
+// };
 
 
-// a function that adds a department
-// const addDepartment = () => {
+// a function that updates employee role
+// const updateEmployeeRole = () => {
 
 // };
 
