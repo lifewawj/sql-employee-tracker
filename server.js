@@ -89,7 +89,7 @@ const handleUserChoice = async () => {
 
 // a function that views all departments
 const viewAllDepartment = () => {
-    db.query('SELECT * FROM departments', (err, results) => {
+    db.query('SELECT id AS department_id, name AS department_names FROM departments', (err, results) => {
         console.table(results);
         handleUserChoice();
     });
@@ -97,7 +97,7 @@ const viewAllDepartment = () => {
 
 // a function that views all roles
 const viewAllRoles = () => {
-    db.query('SELECT * FROM roles', (err, results) => {
+    db.query('SELECT title AS job_title, id AS role_id, department_id, salary FROM roles', (err, results) => {
         if (err) {
             console.log(err)
         };
@@ -109,7 +109,7 @@ const viewAllRoles = () => {
 
 // a function that views all employees
 const viewAllEmployees = () => {
-    const query = 'SELECT * FROM departments INNER JOIN roles ON departments.id = roles.department_id INNER JOIN employees ON roles.id = employees.id;'
+    const query = 'SELECT e.id AS employee_id, e.first_name, e.last_name, e.manager_id, r.department_id, r.salary FROM employees AS e INNER JOIN roles AS r ON e.role_id = r.id;'
     db.query(query, (err, results) => {
         if (err) {
             console.log(err)
