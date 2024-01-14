@@ -5,7 +5,6 @@ ON departments.id = roles.department_id
 INNER JOIN employees
 ON roles.id = employees.id;
 
-
 SELECT id AS department_id, name AS department_names 
 FROM departments;
 
@@ -15,3 +14,7 @@ FROM roles;
 SELECT e.id AS employee_id, e.first_name, e.last_name, e.manager_id, r.department_id, r.salary
 FROM employees AS e
 INNER JOIN roles AS r ON e.role_id = r.id;
+
+-- UPDATE employees
+-- SET column = new value (a string, number, boolean)
+-- -- WHERE id = number
