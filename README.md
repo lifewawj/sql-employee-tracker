@@ -20,12 +20,13 @@ A employee tracker management system built using Node.js, Express, and MySQL. Pr
 - [Questions](#questions)
 
 ## Installation
+
 Make sure to have NodeJS, the provided NPM (Express, MySQL, and Inquirer) installed.
 
 ## Usage
-![Employee Tracker GIF](insert file path here)
-[![Click here to Download Tutorial Video](insert file path here)]
 
+![Employee Tracker GIF](assets/sql-employee-tracker.gif)
+[![Click here to Download Tutorial Video](./assets/sql-employee-tracker.mp4)]
 
 ## Features
 
