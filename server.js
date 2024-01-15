@@ -6,7 +6,7 @@ const inquirer = require('inquirer');
 // Imported db const var (short for database) from connection.js
 const db = require("./config/connection.js");
 
-const PORT = process.env.PORT || 3001; // Create a const var called 'PORT' and stores a place for the server to run on
+const PORT = process.env.PORT || 3002; // Create a const var called 'PORT' and stores a place for the server to run on
 const app = express(); // Create the express app by storing within an const var called 'app'
 
 // Middleware
